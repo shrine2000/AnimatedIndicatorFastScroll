@@ -18,8 +18,7 @@ import com.reddit.indicatorfastscroll.FastScrollerView
 import java.util.*
 
 
-val appList: MutableList<AppModel> = mutableListOf()
-
+var appList: MutableList<AppModel> = mutableListOf()
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
