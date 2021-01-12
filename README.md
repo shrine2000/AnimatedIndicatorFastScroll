@@ -21,9 +21,9 @@ Recyclerview adapter - https://github.com/afollestad/recyclical
 ![](https://i.imgur.com/uT0v2bv.gif)
 
 ## Current State
-![](https://i.imgur.com/H1F1Cxj.jpg)
+![](https://i.imgur.com/wQNINwc.mp4)
 
-![](https://i.imgur.com/BA2ZSv3.jpg)
+
  
 ## License
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
