@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginBottom="93dp"
         android:padding="10dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
 
 
     <com.reddit.indicatorfastscroll.FastScrollerView
-
+        android:layout_marginBottom="93dp"
         android:layout_marginEnd="15dp"
         android:layout_gravity="right"
         android:id="@+id/fastscroller"
@@ -30,6 +31,8 @@
         />
 
     <com.reddit.indicatorfastscroll.FastScrollerThumbView
+        android:layout_marginBottom="93dp"
+
 
         android:id="@+id/fastscroller_thumb"
         android:layout_gravity="right"
@@ -37,5 +40,14 @@
         android:layout_height="match_parent"
         android:layout_marginEnd="50dp" />
 
+    <Button
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/button_select_font"
+        android:layout_gravity="bottom"
+        android:text="select font"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
 
 </FrameLayout>
