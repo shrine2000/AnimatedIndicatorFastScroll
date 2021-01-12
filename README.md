@@ -21,7 +21,7 @@ Recyclerview adapter - https://github.com/afollestad/recyclical
 ![](https://i.imgur.com/uT0v2bv.gif)
 
 ## Current State
-![](https://i.imgur.com/wQNINwc.mp4)
+![](https://i.imgur.com/Z4lLPHC.gif)
 
 
  
