@@ -4,9 +4,12 @@
 Working on recyclerview with scroller animations. 
 Made with kotlin.
 
+Added support for custom font. Fonts can be downloaded (only .ttf) from sites like google fonts and can be selected at runtime
+
 
 ## Contributing
-Contributions Required.
+Contributions Required for making waterfall like animation in reyclerview scroller
+
 
 Pull requests are welcome. If you have a problem make issue.
 
@@ -22,6 +25,10 @@ Recyclerview adapter - https://github.com/afollestad/recyclical
 
 ## Current State
 ![](https://i.imgur.com/Z4lLPHC.gif)
+
+![Custom font](https://i.imgur.com/3WNuJFj.jpg)
+
+![Custom font](https://i.imgur.com/ZpWNtMg.jpg)
 
 
  
