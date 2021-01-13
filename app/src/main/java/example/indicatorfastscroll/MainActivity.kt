@@ -1,16 +1,17 @@
 package example.indicatorfastscroll
 
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
+import android.graphics.Path
+import android.graphics.RectF
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.UserManager
-import android.util.Log
-import android.view.DragEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.reddit.indicatorfastscroll.*
+import kotlinx.coroutines.NonCancellable.start
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -29,16 +31,10 @@ import java.util.*
 val appList: MutableList<AppModel> = mutableListOf()
 lateinit var recyclerView: RecyclerView
 lateinit var fastScroller: FastScrollerView
+lateinit var thumb: RectF
 
 
-var X = 0f
-var Y = 0f
-
-
-
-open class MainActivity : AppCompatActivity() {
-
-    private val TAG ="mmxx"
+class MainActivity : AppCompatActivity() {
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -58,22 +54,29 @@ open class MainActivity : AppCompatActivity() {
             withItem<AppModel, ModelViewHolder>(R.layout.recyclerview_layout) {
                 onBind(::ModelViewHolder) { index, item ->
 
-                    if (appPreferences.customFontPath.isNotEmpty()) {
-                        val typeface = Typeface.createFromFile(File(appPreferences.customFontPath))
-                        appName.typeface = typeface
-                        appPackageName.typeface = typeface
-                    }
+                    if (item.appIcon != null) {
+                        if (appPreferences.customFontPath.isNotEmpty()) {
+                            val typeface = Typeface.createFromFile(File(appPreferences.customFontPath))
+                            appName.typeface = typeface
+                            appPackageName.typeface = typeface
+                        }
 
-                    appName.text = item.appName
-                    appPackageName.text = item.appPackage
-                    appIcon.setImageDrawable(item.appIcon)
+                        appName.text = item.appName
+                        appPackageName.text = item.appPackage
+                        appIcon.setImageDrawable(item.appIcon)
+                    }
                 }
                 onClick { index ->
-                    Toast.makeText(
-                            this@MainActivity,
-                            appList[index].appPackage,
-                            Toast.LENGTH_SHORT
-                    ).show()
+
+                    if (item.appIcon != null) {
+                        Toast.makeText(
+                                this@MainActivity,
+                                appList[index].appPackage,
+                                Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+
                 }
             }
         }
@@ -84,25 +87,28 @@ open class MainActivity : AppCompatActivity() {
         }
 
 
-        var widgetXOrigin : Float = 0F
-        var widgetYOrigin : Float = 0F
-        var widgetDX: Float = 0F
+        var widgetXOrigin = 0F
 
-        var widgetDY: Float = 0F
+        var widgetDX = 0F
+
+        var fastScrollerThumbViewXOrigin = 0F
+        var widgetfastScrollerThumbViewXOrigin = 0F
+
 
         fastScroller.setOnTouchListener { v, event ->
 
-            val viewParent:View = (v.parent as View)
-            val PARENT_HEIGHT = viewParent.height
+            val viewParent: View = (v.parent as View)
+
             val PARENT_WIDTH = viewParent.width
 
-            when(event.actionMasked){
+            when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
                     widgetDX = v.x - event.rawX
-                    widgetDY = v.y - event.rawY
+                    widgetfastScrollerThumbViewXOrigin = fastScrollerThumb.x - event.rawX
+
                     // save widget origin coordinate
                     widgetXOrigin = v.x
-                    widgetYOrigin = v.y
+                    fastScrollerThumbViewXOrigin = fastScrollerThumb.x
                 }
                 MotionEvent.ACTION_MOVE -> {
                     // Screen border Collision
@@ -111,27 +117,24 @@ open class MainActivity : AppCompatActivity() {
                     newX = (PARENT_WIDTH - v.width).toFloat().coerceAtMost(newX)
                     v.x = newX
 
-                    var newY = event.rawY + widgetDY
-                    newY = 0F.coerceAtLeast(newY)
-                    newY = (PARENT_HEIGHT - v.height).toFloat().coerceAtMost(newY)
-                    v.y = newY
+
+                    var newX2 = event.rawX + widgetfastScrollerThumbViewXOrigin
+                    newX2 = 0F.coerceAtLeast(newX2)
+                    newX2 = (PARENT_WIDTH - fastScrollerThumb.width).toFloat().coerceAtMost(newX2)
+                    fastScrollerThumb.x = newX2
 
 
                 }
                 MotionEvent.ACTION_UP -> {
                     // Back to original position
-                    v.x = widgetXOrigin
-                    v.y = widgetYOrigin
-
                     v.animate().x(widgetXOrigin).setDuration(250).start()
-                    v.animate().y(widgetYOrigin).setDuration(250).start()
-
+                    fastScrollerThumb.animate().x(fastScrollerThumbViewXOrigin).setDuration(250).start()
                 }
                 else -> {
                     return@setOnTouchListener false
                 }
             }
-            true
+            false
         }
 
         fastScroller.setupWithRecyclerView(
@@ -140,19 +143,15 @@ open class MainActivity : AppCompatActivity() {
 
                     val item = appList[position].appName
 
+
                     FastScrollItemIndicator.Text(
-                            item.substring(0, 1).toUpperCase()
+                            item.toCharArray()[0].toString().toUpperCase()
                     )
-                },
-
-                )
-
-
-        fastScrollerThumb.setupWithFastScroller(fastScroller)
+                }
+        )
 
 
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -182,7 +181,7 @@ open class MainActivity : AppCompatActivity() {
 
                 AppPreferences(this).customFontPath = "$filesDir/$fontName"
 
-                if (::recyclerView.isInitialized){
+                if (::recyclerView.isInitialized) {
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
 
@@ -209,7 +208,14 @@ open class MainActivity : AppCompatActivity() {
                     )
                 }
             }
+
+
             appList.sortBy { it.appName.toLowerCase(Locale.ROOT) }
+
+            if (::recyclerView.isInitialized) {
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+
 
         } catch (e: java.lang.Exception) {
 
