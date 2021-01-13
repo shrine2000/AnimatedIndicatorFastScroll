@@ -1,13 +1,11 @@
 package example.indicatorfastscroll
 
 
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
-import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Typeface
 import android.os.Bundle
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.reddit.indicatorfastscroll.*
-import kotlinx.coroutines.NonCancellable.start
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -88,14 +85,11 @@ class MainActivity : AppCompatActivity() {
 
 
         var widgetXOrigin = 0F
-
         var widgetDX = 0F
-
         var fastScrollerThumbViewXOrigin = 0F
         var widgetfastScrollerThumbViewXOrigin = 0F
 
-
-        fastScroller.setOnTouchListener { v, event ->
+         fastScroller.setOnTouchListener { v, event ->
 
             val viewParent: View = (v.parent as View)
 
@@ -150,6 +144,7 @@ class MainActivity : AppCompatActivity() {
                 }
         )
 
+        fastScrollerThumb.setupWithFastScroller(fastScroller)
 
     }
 
@@ -157,7 +152,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == OPEN_DOCUMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == OPEN_FONT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
 
             data?.data?.let { documentUri ->
 
@@ -231,7 +226,7 @@ class MainActivity : AppCompatActivity() {
             flags = flags or Intent.FLAG_GRANT_READ_URI_PERMISSION
         }
 
-        startActivityForResult(intent, OPEN_DOCUMENT_REQUEST_CODE)
+        startActivityForResult(intent, OPEN_FONT_REQUEST_CODE)
     }
 
 

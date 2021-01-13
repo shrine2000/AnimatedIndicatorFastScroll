@@ -11,9 +11,8 @@ import com.afollestad.recyclical.datasource.DataSource
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 
 
-const val OPEN_DOCUMENT_REQUEST_CODE = 345
+const val OPEN_FONT_REQUEST_CODE = 345
 
-const val ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 data class AppModel(
         var appName: String,
