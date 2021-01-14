@@ -109,13 +109,13 @@ class MainActivity : AppCompatActivity() {
                     var newX = event.rawX + widgetDX
                     newX = 0F.coerceAtLeast(newX)
                     newX = (PARENT_WIDTH - v.width).toFloat().coerceAtMost(newX)
-                    v.x = newX
+                    v.animate().x(newX).setDuration(250).start()
 
 
                     var newX2 = event.rawX + widgetfastScrollerThumbViewXOrigin
                     newX2 = 0F.coerceAtLeast(newX2)
                     newX2 = (PARENT_WIDTH - fastScrollerThumb.width).toFloat().coerceAtMost(newX2)
-                    fastScrollerThumb.x = newX2
+                    fastScrollerThumb.animate().x(newX2).setDuration(250).start()
 
 
                 }
