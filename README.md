@@ -8,7 +8,7 @@ Added support for custom font. Fonts can be downloaded (only .ttf) from sites li
 
 
 ## Contributing
-Contributions Required for making waterfall like animation in reyclerview scroller
+Contributions Required for making waterfall like animation in reyclerview scrollbar
 
 
 Pull requests are welcome. If you have a problem make issue.
@@ -24,7 +24,8 @@ Recyclerview adapter - https://github.com/afollestad/recyclical
 ![](https://i.imgur.com/uT0v2bv.gif)
 
 ## Current State
-![](https://i.imgur.com/Z4lLPHC.gif)
+
+[Video Link](https://i.imgur.com/nWD2zWI.mp4)
 
 ![Custom font](https://i.imgur.com/3WNuJFj.jpg)
 
