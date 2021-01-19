@@ -220,13 +220,14 @@ class MainActivity : AppCompatActivity() {
     private fun selectFontPath() {
 
         Toast.makeText(applicationContext, "Download .ttf fonts & select them", Toast.LENGTH_LONG).show()
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+
+        Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             type = "*/*"
             addCategory(Intent.CATEGORY_OPENABLE)
             flags = flags or Intent.FLAG_GRANT_READ_URI_PERMISSION
+            startActivityForResult(this, OPEN_FONT_REQUEST_CODE)
         }
 
-        startActivityForResult(intent, OPEN_FONT_REQUEST_CODE)
     }
 
 
