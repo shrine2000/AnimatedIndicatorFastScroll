@@ -40,21 +40,3 @@ fun MutableList<AppModel>.toDataSource(): DataSource<AppModel> {
 fun String.isNotEmpty() = this != ""
 
 
-fun getAllChildren(v: View): ArrayList<View> {
-    if (v !is ViewGroup) {
-        val viewArrayList = ArrayList<View>()
-        viewArrayList.add(v)
-        return viewArrayList
-    }
-    val result = ArrayList<View>()
-    for (i in 0 until v.childCount) {
-        val child = v.getChildAt(i)
-        val viewArrayList = ArrayList<View>()
-        viewArrayList.add(v)
-        viewArrayList.addAll(getAllChildren(child))
-        result.addAll(viewArrayList)
-    }
-    return result
-}
-
-

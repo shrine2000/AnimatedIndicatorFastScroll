@@ -109,13 +109,13 @@ class MainActivity : AppCompatActivity() {
                     var newX = event.rawX + widgetDX
                     newX = 0F.coerceAtLeast(newX)
                     newX = (PARENT_WIDTH - v.width).toFloat().coerceAtMost(newX)
-                    v.animate().x(newX).setDuration(250).start()
+                    v.animate().x(newX).setDuration(0).start()
 
 
                     var newX2 = event.rawX + widgetfastScrollerThumbViewXOrigin
                     newX2 = 0F.coerceAtLeast(newX2)
                     newX2 = (PARENT_WIDTH - fastScrollerThumb.width).toFloat().coerceAtMost(newX2)
-                    fastScrollerThumb.animate().x(newX2).setDuration(250).start()
+                    fastScrollerThumb.animate().x(newX2).setDuration(0).start()
 
 
                 }
@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectFontPath() {
 
-        Toast.makeText(applicationContext, "Download ttf fonts & select them", Toast.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, "Download .ttf fonts & select them", Toast.LENGTH_LONG).show()
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             type = "*/*"
             addCategory(Intent.CATEGORY_OPENABLE)
