@@ -191,6 +191,8 @@ class MainActivity : AppCompatActivity() {
             val userManager = getSystemService(Context.USER_SERVICE) as UserManager
             val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
+            appList.clear()
+
             for (profile in userManager.userProfiles) {
                 for (app in launcherApps.getActivityList(null, profile)) {
                     val appIcon = packageManager.getApplicationIcon(app.applicationInfo.packageName)
