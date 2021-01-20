@@ -6,7 +6,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
-import android.graphics.RectF
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.UserManager
@@ -28,7 +27,7 @@ import java.util.*
 val appList: MutableList<AppModel> = mutableListOf()
 lateinit var recyclerView: RecyclerView
 lateinit var fastScroller: FastScrollerView
-lateinit var thumb: RectF
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setup {
             withDataSource(appList.toDataSource())
             withItem<AppModel, ModelViewHolder>(R.layout.recyclerview_layout) {
-                onBind(::ModelViewHolder) { index, item ->
+                onBind(::ModelViewHolder) { _, item ->
 
                     if (item.appIcon != null) {
                         if (appPreferences.customFontPath.isNotEmpty()) {
@@ -74,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
 
+
                 }
             }
         }
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         var widgetXOrigin = 0F
         var widgetDX = 0F
         var fastScrollerThumbViewXOrigin = 0F
-        var widgetfastScrollerThumbViewXOrigin = 0F
+        var widgetFastScrollerThumbViewXOrigin = 0F
 
          fastScroller.setOnTouchListener { v, event ->
 
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
                     widgetDX = v.x - event.rawX
-                    widgetfastScrollerThumbViewXOrigin = fastScrollerThumb.x - event.rawX
+                    widgetFastScrollerThumbViewXOrigin = fastScrollerThumb.x - event.rawX
 
                     // save widget origin coordinate
                     widgetXOrigin = v.x
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                     v.animate().x(newX).setDuration(0).start()
 
 
-                    var newX2 = event.rawX + widgetfastScrollerThumbViewXOrigin
+                    var newX2 = event.rawX + widgetFastScrollerThumbViewXOrigin
                     newX2 = 0F.coerceAtLeast(newX2)
                     newX2 = (PARENT_WIDTH - fastScrollerThumb.width).toFloat().coerceAtMost(newX2)
                     fastScrollerThumb.animate().x(newX2).setDuration(0).start()
