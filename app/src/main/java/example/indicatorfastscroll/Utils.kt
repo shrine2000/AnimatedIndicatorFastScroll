@@ -28,7 +28,6 @@ class ModelViewHolder(itemView: View) : ViewHolder(itemView) {
 }
 
 
-
 fun MutableList<AppModel>.toDataSource(): DataSource<AppModel> {
     val dataSource = dataSourceTypedOf<AppModel>()
     this.forEach {

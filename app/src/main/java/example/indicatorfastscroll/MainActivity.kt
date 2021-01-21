@@ -29,7 +29,6 @@ lateinit var recyclerView: RecyclerView
 lateinit var fastScroller: FastScrollerView
 
 
-
 class MainActivity : AppCompatActivity() {
 
 
@@ -73,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
 
-
                 }
             }
         }
@@ -89,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         var fastScrollerThumbViewXOrigin = 0F
         var widgetFastScrollerThumbViewXOrigin = 0F
 
-         fastScroller.setOnTouchListener { v, event ->
+        fastScroller.setOnTouchListener { v, event ->
 
             val viewParent: View = (v.parent as View)
 

@@ -13,6 +13,4 @@ class AppPreferences(context: Context) {
     var customFontPath: String
         get() = prefs.getString(CUSTOM_FONT_PATH, "").toString()
         set(value) = prefs.edit().putString(CUSTOM_FONT_PATH, value).apply()
-
-
 }
