@@ -62,16 +62,13 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 onClick { index ->
-
-                    if (item.appIcon != null) {
-                        Toast.makeText(
-                                this@MainActivity,
-                                appList[index].appPackage,
-                                Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-
+                   item.appIcon?.let {
+                       Toast.makeText(
+                               this@MainActivity,
+                               appList[index].appPackage,
+                               Toast.LENGTH_SHORT
+                       ).show()
+                   }
                 }
             }
         }
@@ -91,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
             val viewParent: View = (v.parent as View)
 
-            val PARENT_WIDTH = viewParent.width
+            val parentWidth = viewParent.width
 
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
@@ -106,13 +103,13 @@ class MainActivity : AppCompatActivity() {
                     // Screen border Collision
                     var newX = event.rawX + widgetDX
                     newX = 0F.coerceAtLeast(newX)
-                    newX = (PARENT_WIDTH - v.width).toFloat().coerceAtMost(newX)
+                    newX = (parentWidth - v.width).toFloat().coerceAtMost(newX)
                     v.animate().x(newX).setDuration(0).start()
 
 
                     var newX2 = event.rawX + widgetFastScrollerThumbViewXOrigin
                     newX2 = 0F.coerceAtLeast(newX2)
-                    newX2 = (PARENT_WIDTH - fastScrollerThumb.width).toFloat().coerceAtMost(newX2)
+                    newX2 = (parentWidth - fastScrollerThumb.width).toFloat().coerceAtMost(newX2)
                     fastScrollerThumb.animate().x(newX2).setDuration(0).start()
 
 
