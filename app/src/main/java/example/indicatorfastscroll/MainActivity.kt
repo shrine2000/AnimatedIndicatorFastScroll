@@ -180,38 +180,33 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun populateList() {
+    private fun populateList() =  try {
+        val userManager = getSystemService(Context.USER_SERVICE) as UserManager
+        val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
-        try {
-            val userManager = getSystemService(Context.USER_SERVICE) as UserManager
-            val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        appList.clear()
 
-            appList.clear()
-
-            for (profile in userManager.userProfiles) {
-                for (app in launcherApps.getActivityList(null, profile)) {
-                    val appIcon = packageManager.getApplicationIcon(app.applicationInfo.packageName)
-                    appList.add(
-                            AppModel(
-                                    app.label.toString(),
-                                    app.applicationInfo.packageName,
-                                    appIcon
-                            )
-                    )
-                }
+        for (profile in userManager.userProfiles) {
+            for (app in launcherApps.getActivityList(null, profile)) {
+                val appIcon = packageManager.getApplicationIcon(app.applicationInfo.packageName)
+                appList.add(
+                        AppModel(
+                                app.label.toString(),
+                                app.applicationInfo.packageName,
+                                appIcon
+                        )
+                )
             }
-
-
-            appList.sortBy { it.appName.toLowerCase(Locale.ROOT) }
-
-            if (::recyclerView.isInitialized) {
-                recyclerView.adapter?.notifyDataSetChanged()
-            }
-
-
-        } catch (e: java.lang.Exception) {
-
         }
+
+
+        appList.sortBy { it.appName.toLowerCase(Locale.ROOT) }
+
+        ::recyclerView.isInitialized.let { if (it) recyclerView.adapter?.notifyDataSetChanged() }
+
+
+    } catch (e: java.lang.Exception) {
+
     }
 
     private fun selectFontPath() {
